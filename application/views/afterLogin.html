@@ -1,0 +1,240 @@
+<head>
+    <!-- Bootstrap include -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+    />
+    
+    <!-- font -->
+    <link href='https://fonts.googleapis.com/css?family=Irish Grover' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=IM+Fell+English" />
+
+    <!-- jquery 버전 유의 -->
+    <!-- slim/jquery, 3.1.0 윗 버전에서 ajax가 작동하지 않는 오류 확인 -->
+    <!-- Bootstrap의 CDN을 copy&paste 하되 Line 8의 버전만 3.1.0으로 수정하세요 -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+
+<body>
+    <div style="height: 930px;">
+        <div class="container" style="left: 13%; top: 20%;">
+            <h3 class="question">Are you casting a spell?</h3>
+            <input
+                type="text"
+                class="inputBox"
+                style="left: 41px; top: 33%;"
+                name="name"
+                placeholder="your name"
+            />
+            <input
+                type="text"
+                class="inputBox"
+                style="left: 41px; top: 53%;"
+                name="spell"
+                placeholder="spell"
+            />
+            <button style="left: 41px; top: 77%;">Yes, i'm doing it</button>
+        </div>
+        <div class="container" style="left: 60%; top: 20%;">
+            <h3 class="question" style="left: 7%; font-size: 26px;">Would you create a new spell?</h3>
+            <input
+                type="text"
+                class="inputBox"
+                style="left: 41px; top: 33%;"
+                name="spell"
+                placeholder="spell"
+            />
+            <select name="category" class="inputBox" style=" left: 41px; top: 53%;">
+                <option value="" disabled selected>choose category</option>
+                <option value="charm">charm</option>
+                <option value="transfiguration">transfiguration</option>
+                <option value="healing spell">healing spell</option>
+                <option value="counter-jinxes">counter-jinxes</option>
+                <option value="jinx">jinx</option>
+                <option value="hex">hex</option>
+                <option value="curse">curse</option>
+                <option value="unforgivable curse">unforgivable curse</option>
+            </select>
+            <button style="left: 41px; top: 77%;">Sure, awesome!</button>
+        </div>
+        <div class="container" style="left: 13%; top: 80%;">
+            <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose identity<br/>do you want to look?</h3>
+            <input
+                type="text"
+                class="inputBox"
+                style="left: 41px; top: 48%;"
+                name="wizardName"
+                placeholder="name"
+            />
+            <button style="left: 41px; top: 73%;">Let me see</button>
+        </div>
+        <div class="container" style="left: 60%; top: 80%;">
+            <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose recent spell<br/>do you want to look?</h3>
+            <input
+                type="text"
+                class="inputBox"
+                style="left: 41px; top: 48%;"
+                name="wizardName"
+                placeholder="name"
+            />
+            <button style="left: 41px; top: 73%;">Let me see</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    $("#new-btn").click(() => {
+        // new-email이라는 id값을 가지고 있는 input의 value를 가지고 옴
+        const value = $("#new-email").val();
+        const url = "/mate";
+
+        // email이라는 파라메터에 위의 value를 넣음
+        $.post(url, { email: value }, (data, status) => {
+            // http 상태 코드가 200(success)이라면
+            if (status == "success") {
+                // 성공했다는 alert창을 띄움
+                $("#new-alert").append(
+                    "<div id='success' class='alert alert-success'>추가를 성공했습니다!</div>"
+                );
+                $("#new-alert").fadeOut(4000);
+            }
+        });
+    });
+    $("#add-btn").click(() => {
+        // new-email이라는 id값을 가지고 있는 input의 value를 가지고 옴
+        const e = $("#add-email").val();
+        const p = $("#add-project").val();
+        const s = $("#add-score").val();
+
+        const url = "/score";
+
+        // email이라는 파라메터에 위의 value를 넣음
+        $.post(url, { email: e, project: p, score: s }, (data, status) => {
+            // http 상태 코드가 200(success)이라면
+            if (status == "success") {
+                // 성공했다는 alert창을 띄움
+                $("#add-alert").append(
+                    "<div id='success' class='alert alert-success'>점수추가를 성공했습니다!</div>"
+                );
+                $("#add-alert").fadeOut(4000);
+            }
+        });
+    });
+
+    $("#find-btn").click(() => {
+        const value = $("#find-email").val();
+        const url = "/mate/" + value;
+        //그냥 get한다면?
+        $.get(url, {value}, (data)=> {
+            console.log(data)
+        });
+        $.post(url, { email: value }, (data) => {
+            // 조회했을 때 값이 null이 아니면 (일치하는 값이 존재한다면)
+            if (status != null) {
+                $("#find-alert").append(
+                    "<div id='success' class='alert alert-success'>조회를 성공했습니다!</div>"
+                );
+                $("#find-alert").fadeOut(2000);
+
+                // stringify는 json객체를 string으로, parse는 string을 json객체로 변환 시켜줌
+                const test = JSON.stringify(data);
+                const parsedData = JSON.parse(test);
+                $("#table").empty();
+
+                $("#table").append(
+                    "<tr><th scope='row'>average</th><td>" +
+                        parsedData.average +
+                        "</td></tr>"
+                );
+                // rates라는 key의 value로 Json array가 있으므로 반복문을 통해 한 줄씩 테이블에 넣어줌
+                for (var i = 0; i < parsedData.rates.length; i++) {
+                    $("#table").append(
+                        "<tr><th scope='row'>project title</th><td>" +
+                            parsedData.rates[i].projecttitle +
+                            "</td></tr>"
+                    );
+                    $("#table").append(
+                        "<tr><th scope='row'>score</th><td>" +
+                            parsedData.rates[i].score +
+                            "</td></tr>"
+                    );
+                }
+            }
+        });
+    });
+
+</script>
+
+<!-- styling -->
+<style>
+    .container {
+        position: absolute;
+        width: 30%;
+        height: 45%;
+
+        background: #D9D9D9;
+    }
+    .title {
+        position: absolute;
+        left: 260px;
+        top: 100px;
+
+        font-family: 'Irish Grover';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 64px;
+        line-height: 77px;
+        text-align: center;
+
+        color: #000000;
+    }
+    .question {
+        position: absolute;
+        left: 35px;
+        top: 10%;
+
+        font-family: 'IM FELL English';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 41px;
+
+        color: #000000;
+    }
+    .inputBox {
+        position: absolute;
+        width: 80%;
+        height: 15%;
+        border: none;
+        padding: 0% 3%;
+
+        background: #F2F2F2;
+
+        font-family: 'Jaldi';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 41px;
+
+        color: #454545;
+    }
+
+    button {
+        position: absolute;
+        width: 80%;
+        height: 15%;
+        border: none;
+
+        background: #ADADAD;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+        border-radius: 50px;
+
+        font-family: 'IM FELL English';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
+    }
+</style>
