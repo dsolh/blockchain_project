@@ -11,6 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Irish Grover' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=IM+Fell+English" />
+    <link href="https://fonts.cdnfonts.com/css/headlandone" rel="stylesheet">
 
     <!-- jquery 버전 유의 -->
     <!-- slim/jquery, 3.1.0 윗 버전에서 ajax가 작동하지 않는 오류 확인 -->
@@ -19,14 +20,17 @@
 </head>
 
 <body>
-    <div style="height: 930px;">
-        <div class="container" style="left: 13%; top: 20%;">
+    <div style="height: 1000px; width:1400px; overflow: auto; white-space: nowrap;">
+        <img id="background_img" class="background">
+        <div class="background" style="background: #2E2E2E8F; height:930px;"></div>
+
+        <div class="container" style="left: 170px; top: 170px;">
             <h3 class="question">Are you casting a spell?</h3>
             <input
                 id="CastSpell_wizardName"
                 type="text"
                 class="inputBox"
-                style="left: 41px; top: 33%;"
+                style="left: 41px; top: 95px;"
                 name="name"
                 placeholder="your name"
             />
@@ -34,24 +38,24 @@
                 id="CastSpell_spell"
                 type="text"
                 class="inputBox"
-                style="left: 41px; top: 53%;"
+                style="left: 41px; top: 155px;"
                 name="spell"
                 placeholder="spell"
             />
-            <button id="CastSpell_btn" style="left: 41px; top: 77%;">Yes, i'm doing it</button>
+            <button id="CastSpell_btn" style="left: 30px; top: 218px;">Yes, i'm doing it</button>
         </div>
-        <div class="container" style="left: 60%; top: 20%;">
+        <div class="container" style="left: 830px; top: 170px;">
             <h3 class="question" style="left: 7%; font-size: 26px;">Would you create a new spell?</h3>
             <input
                 id="CreateSpell_spell"
                 type="text"
                 class="inputBox"
-                style="left: 41px; top: 33%;"
+                style="left: 41px; top: 95px;"
                 name="spell"
                 placeholder="spell"
             />
-            <select id="CreateSpell_category" name="category" class="inputBox" style=" left: 41px; top: 53%;">
-                <option value="" disabled selected>choose category</option>
+            <select id="CreateSpell_category" name="category" class="inputBox" style=" left: 41px; top: 155px;" required>
+                <option value="" disabled selected style="color:#00000081;">choose category</option>
                 <option value="charm">charm</option>
                 <option value="transfiguration">transfiguration</option>
                 <option value="healing spell">healing spell</option>
@@ -62,31 +66,35 @@
                 <option value="curse">curse</option>
                 <option value="unforgivable curse">unforgivable curse</option>
             </select>
-            <button id="CreateSpell_btn" style="left: 41px; top: 77%;">Sure, awesome!</button>
+            <button id="CreateSpell_btn" style="left: 35px; top: 218px;">Sure, awesome!</button>
         </div>
-        <div class="container" style="left: 13%; top: 80%;">
+        <div class="container" style="left: 170px; top: 580px;">
             <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose identity<br/>do you want to look?</h3>
             <input
                 id="CheckIdentity_wizardName"
                 type="text"
                 class="inputBox"
-                style="left: 41px; top: 48%;"
+                style="left: 41px; top: 135px;"
                 name="wizardName"
                 placeholder="name"
             />
-            <button id="CheckIdentity_btn" style="left: 41px; top: 73%;">Let me see</button>
+            <button id="CheckIdentity_btn" style="left: 32px; top: 205px;">Let me see</button>
         </div>
-        <div class="container" style="left: 60%; top: 80%;">
+        <div class="container" style="left: 830px; top: 580px;">
             <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose recent spell<br/>do you want to look?</h3>
             <input
                 id="RecentSpell_wizardName"
                 type="text"
                 class="inputBox"
-                style="left: 41px; top: 48%;"
+                style="left: 41px; top: 135px;"
                 name="wizardName"
                 placeholder="name"
             />
-            <button id="RecentSpell_btn" style="left: 41px; top: 73%;">Let me see</button>
+            <button id="RecentSpell_btn" style="left: 35px; top: 205px;">Let me see</button>
+        </div>
+        <div class="bar">
+            <h1 id="title" class="title"></h1>
+            <img id="logo" class="logo">
         </div>
     </div>
 </body>
@@ -94,26 +102,81 @@
 <script>
     var country;
     window.onload = function() {
-        // URLSearchParams 객체
         var url = new URL(window.location.href);
         const urlParams = url.searchParams;
 
-        // URLSearchParams.get()
+        // country check
         country = urlParams.get('country');
         if (country == null) {
             alert("There is no country");
             location.href = "index.html";
         }
+
+        // image setting
+        if (country == "British") {
+            $('#background_img').attr("src","img/british_ministry_of_magic_background.jpg");
+            $('.background').css("top", "-5px");
+
+            $('#title').append("british ministry of magic");
+            $('#logo').attr("src","img/british_ministry_of_magic_logo.png");
+        }
+        else if (country == "USA") {
+            $('#background_img').attr("src","img/MACUSA_background.png");
+            $('.background').css("top", "-120px");
+
+            $('#title').append("The Magicial Congress of the United States of America");
+            $('#logo').attr("src","img/MACUSA_logo.png");
+            $('.logo').css("height", "67px");
+        }
+        else if (country == "German") {
+            $('#background_img').attr("src","img/german_ministry_of_magic_background.png");            $('.background').css("top", "-120px");
+            $('.background').css("height", "600px");
+            $('.background').css("top", "60px");
+
+            $('#title').append("german ministry of magic");
+            $('#logo').attr("src","img/german_ministry_of_magic_logo.png");
+            $('.logo').css("height", "67px");
+            $('.logo').css("left", "1320px");
+        }
+        else if (country == "French") {
+            $('#background_img').attr("src","img/french_ministry_of_magic_background.jpg");
+            $('.background').css("height", "604px");
+            $('.background').css("top", "70px");
+
+            $('#title').append("french ministry of magic");
+            $('#logo').attr("src","img/french_ministry_of_magic_logo.png");
+            $('.logo').css("height", "67px");
+            $('.logo').css("left", "1320px");
+        }
+        else if (country == "China") {
+            $('#background_img').attr("src","img/chinese_ministry_of_magic_background.png");
+            $('.background').css("top", "-180px");
+
+            $('#title').append("chinese ministry of magic");
+            $('#logo').attr("src","img/chinese_ministry_of_magic_logo.png");
+            $('.logo').css("height", "67px");
+        }
     }
 
+    $("button").click(() => {
+        $("button").attr("disabled", true);
+    })
     $("#CastSpell_btn").click(() => {
         const wizardName = $("#CastSpell_wizardName").val();
         const spell = $("#CastSpell_spell").val();
         const url = "/cast_spell";
 
-        $.post(url, { wizardName:wizardName, spell:spell, country:country }, (data, status) => {
-            alert(data.result);
-        });
+        if (wizardName=="" || spell=="") {
+            alert("Invalid Input");        
+            $("button").attr("disabled", false);
+        }
+        else {
+            $.post(url, { wizardName:wizardName, spell:spell, country:country }, (data, status) => {
+                alert(data.result);
+                $("button").attr("disabled", false);
+            });
+        }
+        
     });
 
     $("#CreateSpell_btn").click(() => {
@@ -121,47 +184,65 @@
         const category = $("#CreateSpell_category").val();
         const url = "/create_spell";
 
-        $.post(url, { spell:spell, category:category }, (data, status) => {
-            alert(data.result);
-        });
+        if (spell=="" || category=="") {
+            alert("Invalid Input");
+            $("button").attr("disabled", false);
+        }
+        else {
+            $.post(url, { spell:spell, category:category }, (data, status) => {
+                alert(data.result);
+                $("button").attr("disabled", false);
+            });     
+        }
+
     });
 
     $("#CheckIdentity_btn").click(() => {
         const wizardName = $("#CheckIdentity_wizardName").val();
         const url = "/check_identity";
 
-        $.get(url, { wizardName:wizardName, country:country}, (data, status) => {
-            alert(data.result);
-        });
+        if (wizardName=="") {
+            alert("Invalid Input");
+            $("button").attr("disabled", false);
+        }
+        else {
+            $.get(url, { wizardName:wizardName, country:country}, (data, status) => {
+                alert(data.result);
+                $("button").attr("disabled", false);
+            });
+        }
+        
     });
 
     $("#RecentSpell_btn").click(() => {
         const wizardName = $("#RecentSpell_wizardName").val();
         const url = "/recent_spell";
 
-        $.get(url, { wizardName:wizardName, country:country}, (data, status) => {
-            alert(data.result);
-        });
+        if (wizardName=="") {
+            alert("Invalid Input");
+            $("button").attr("disabled", false);
+        }
+        else {
+            $.get(url, { wizardName:wizardName, country:country}, (data, status) => {
+                alert(data.result);
+                $("button").attr("disabled", false);
+            });
+        }
     });
 </script>
 
 <!-- styling -->
 <style>
-    .fixed {
-        height: 100%;
-
-        background-image: url(img/starBackground.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+    .background {
+        position: fixed;
+        width: 1410px;
     }
     .container {
         position: absolute;
-        width: 30%;
-        height: 45%;
+        width: 400px;
+        height: 300px;
 
-        background: #D9D9D9;
+        background: #1C1C1CA3;
     }
     .question {
         position: absolute;
@@ -170,11 +251,10 @@
 
         font-family: 'IM FELL English';
         font-style: normal;
-        font-weight: 400;
         font-size: 28px;
         line-height: 41px;
 
-        color: #000000;
+        color: #ffffff;
     }
     .inputBox {
         position: absolute;
@@ -191,22 +271,66 @@
         font-size: 20px;
         line-height: 41px;
 
-        color: #454545;
+        color: #303030;
+    }
+
+    input:focus {outline: none;}
+    select:focus {outline: none;}
+    input::placeholder {color: #00000081;}
+    select:invalid {
+        color: #00000081;
+    }
+    select option {
+        color :#000000
     }
 
     button {
         position: absolute;
-        width: 80%;
-        height: 15%;
+        width: 330px;
+        height: 65px;
         border: none;
 
-        background: #ADADAD;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+        background: none;
+        background-image: url("img/button_frame.png");
+        background-size: cover;
         border-radius: 50px;
 
         font-family: 'IM FELL English';
         font-style: normal;
         font-weight: 400;
         font-size: 22px;
+        color: #FFFFFF;
+    }
+
+    .bar {
+        position: fixed;
+        width: 1440px;
+        height: 80px;
+        left: 0px;
+        top: 0px;
+
+        background: #161616;
+    }
+
+    .title {
+        position: absolute;
+        height: 45px;
+        left: 31px;
+        top: 24px;
+
+        font-family: 'HeadlandOne';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        text-transform: uppercase;
+
+        color: #FFFFFF;
+    }
+
+    .logo {
+        position: absolute;
+        height: 70px;
+        left: 1300px;
+        top: 10px;
     }
 </style>
