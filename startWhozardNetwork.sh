@@ -1,12 +1,12 @@
 pushd network
 
 ./startnetwork.sh
-sleep 5
+sleep 60
 
 ./createchannel.sh
-sleep 5
+sleep 30
 
 ./setAnchorPeerUpdate.sh
-sleep 5
+sleep 30
 
 popd
