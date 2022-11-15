@@ -20,11 +20,11 @@
 </head>
 
 <body>
-    <div style="height: 1000px; width:1400px; overflow: auto; white-space: nowrap;">
+    <div style="height: 1000px; width:100%; overflow: auto; white-space: nowrap;">
         <img id="background_img" class="background">
         <div class="background" style="background: #2E2E2E8F; height:930px;"></div>
 
-        <div class="container" style="left: 170px; top: 170px;">
+        <div class="container" style="left: 130px; top: 170px;">
             <h3 class="question">Are you casting a spell?</h3>
             <input
                 id="CastSpell_wizardName"
@@ -44,7 +44,7 @@
             />
             <button id="CastSpell_btn" style="left: 30px; top: 218px;">Yes, i'm doing it</button>
         </div>
-        <div class="container" style="left: 830px; top: 170px;">
+        <div class="container" style="left: 750px; top: 170px;">
             <h3 class="question" style="left: 7%; font-size: 26px;">Would you create a new spell?</h3>
             <input
                 id="CreateSpell_spell"
@@ -68,7 +68,7 @@
             </select>
             <button id="CreateSpell_btn" style="left: 35px; top: 218px;">Sure, awesome!</button>
         </div>
-        <div class="container" style="left: 170px; top: 580px;">
+        <div class="container" style="left: 130px; top: 580px;">
             <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose identity<br/>do you want to look?</h3>
             <input
                 id="CheckIdentity_wizardName"
@@ -80,7 +80,7 @@
             />
             <button id="CheckIdentity_btn" style="left: 32px; top: 205px;">Let me see</button>
         </div>
-        <div class="container" style="left: 830px; top: 580px;">
+        <div class="container" style="left: 750px; top: 580px;">
             <h3 class="question" style="top:13%; font-size: 28px; line-height: 32px;">Whose recent spell<br/>do you want to look?</h3>
             <input
                 id="RecentSpell_wizardName"
@@ -136,7 +136,7 @@
             $('#title').append("german ministry of magic");
             $('#logo').attr("src","img/german_ministry_of_magic_logo.png");
             $('.logo').css("height", "67px");
-            $('.logo').css("left", "1320px");
+            $('.logo').css("left", "1190px");
         }
         else if (country == "French") {
             $('#background_img').attr("src","img/french_ministry_of_magic_background.jpg");
@@ -146,7 +146,7 @@
             $('#title').append("french ministry of magic");
             $('#logo').attr("src","img/french_ministry_of_magic_logo.png");
             $('.logo').css("height", "67px");
-            $('.logo').css("left", "1320px");
+            $('.logo').css("left", "1190px");
         }
         else if (country == "China") {
             $('#background_img').attr("src","img/chinese_ministry_of_magic_background.png");
@@ -155,6 +155,9 @@
             $('#title').append("chinese ministry of magic");
             $('#logo').attr("src","img/chinese_ministry_of_magic_logo.png");
             $('.logo').css("height", "67px");
+        } else {
+            alert("There is no country");
+            location.href = "index.html";
         }
     }
 
@@ -235,7 +238,7 @@
 <style>
     .background {
         position: fixed;
-        width: 1410px;
+        width: 1300px;
     }
     .container {
         position: absolute;
@@ -304,7 +307,7 @@
 
     .bar {
         position: fixed;
-        width: 1440px;
+        width: 1300px;
         height: 80px;
         left: 0px;
         top: 0px;
@@ -315,13 +318,13 @@
     .title {
         position: absolute;
         height: 45px;
-        left: 31px;
+        left: 24px;
         top: 24px;
 
         font-family: 'HeadlandOne';
         font-style: normal;
         font-weight: 400;
-        font-size: 32px;
+        font-size: 30px;
         text-transform: uppercase;
 
         color: #FFFFFF;
@@ -330,7 +333,7 @@
     .logo {
         position: absolute;
         height: 70px;
-        left: 1300px;
+        left: 1170px;
         top: 10px;
     }
 </style>
